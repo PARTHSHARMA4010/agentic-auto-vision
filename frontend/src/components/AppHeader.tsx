@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+// import { useAuth } from "@/contexts/AuthContext";
 import { Car, Bell, User, LogOut, Calendar, Settings, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export const AppHeader = () => {
-  const { user, isAuthenticated, logout } = useAuth();
+  // const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [notifications] = useState(3);
@@ -39,7 +39,7 @@ export const AppHeader = () => {
         </div>
 
         {/* Nav Links */}
-        {isAuthenticated && (
+        { (
           <nav className="hidden md:flex items-center gap-1">
             {navItems.map((item) => (
               <Button
@@ -60,7 +60,7 @@ export const AppHeader = () => {
 
         {/* Right side */}
         <div className="flex items-center gap-2">
-          {isAuthenticated ? (
+          { (
             <>
               {/* Notifications */}
               <Button variant="ghost" size="icon" className="relative">
@@ -80,15 +80,15 @@ export const AppHeader = () => {
                       <User className="w-4 h-4 text-white" />
                     </div>
                     <span className="hidden sm:block text-sm font-medium text-foreground">
-                      {user?.name?.split(" ")[0]}
+                      {"Parth"}
                     </span>
                     <ChevronDown className="w-4 h-4 text-muted-foreground" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56 bg-card border-border">
                   <div className="px-3 py-2 border-b border-border">
-                    <p className="font-medium text-foreground">{user?.name}</p>
-                    <p className="text-sm text-muted-foreground">{user?.email}</p>
+                    <p className="font-medium text-foreground">{"Parth"}</p>
+                    <p className="text-sm text-muted-foreground">{"Parth"}</p>
                   </div>
                   <DropdownMenuItem onClick={() => navigate("/bookings")} className="cursor-pointer">
                     <Calendar className="w-4 h-4 mr-2" />
@@ -99,21 +99,23 @@ export const AppHeader = () => {
                     Settings
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={logout} className="cursor-pointer text-red-400">
+                  <DropdownMenuItem  className="cursor-pointer text-red-400">
                     <LogOut className="w-4 h-4 mr-2" />
                     Sign Out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </>
-          ) : (
-            <Button
-              onClick={() => navigate("/auth")}
-              className="bg-gradient-to-r from-cyber-cyan to-cyber-purple text-background font-medium"
-            >
-              Sign In
-            </Button>
-          )}
+          ) 
+          // : (
+          //   <Button
+          //     onClick={() => navigate("/auth")}
+          //     className="bg-gradient-to-r from-cyber-cyan to-cyber-purple text-background font-medium"
+          //   >
+          //     Sign In
+          //   </Button>
+          // )
+          }
         </div>
       </div>
     </header>

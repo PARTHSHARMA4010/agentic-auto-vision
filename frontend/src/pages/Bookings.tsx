@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+// import { useAuth } from "@/contexts/AuthContext";
 import {
   Calendar,
   Clock,
@@ -93,14 +93,14 @@ const statusConfig = {
 };
 
 const Bookings = () => {
-  const { isAuthenticated } = useAuth();
+  // const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [filter, setFilter] = useState<string>("ALL");
 
-  if (!isAuthenticated) {
-    navigate("/auth");
-    return null;
-  }
+  // if (!isAuthenticated) {
+  //   navigate("/auth");
+  //   return null;
+  // }
 
   const filteredBookings = filter === "ALL" ? bookings : bookings.filter((b) => b.status === filter);
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+// import { useAuth } from "@/contexts/AuthContext";
 import { AppHeader } from "@/components/AppHeader";
 import { FleetDashboard } from "@/components/FleetDashboard";
 import { VoiceAgent } from "@/components/VoiceAgent";
@@ -19,19 +19,19 @@ const pageTransition = {
 
 const Index = () => {
   const [currentView, setCurrentView] = useState<ViewState>("DASHBOARD");
-  const { isAuthenticated } = useAuth();
+  // const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/auth");
-    }
-  }, [isAuthenticated, navigate]);
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     navigate("/auth");
+  //   }
+  // }, [isAuthenticated, navigate]);
 
-  if (!isAuthenticated) {
-    navigate("/auth");
-    return null;
-  }
+  // if (!isAuthenticated) {
+  //   navigate("/auth");
+  //   return null;
+  // }
 
   const showHeader = currentView === "DASHBOARD";
 

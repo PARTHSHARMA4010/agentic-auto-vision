@@ -2,31 +2,58 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "@/contexts/AuthContext";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
-import Auth from "./pages/Auth";
 import Bookings from "./pages/Bookings";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login"; // <--- Import the new Login page
 
 const queryClient = new QueryClient();
 
+// --- 1. THE GUARD (Protects your Dashboard) ---
+// This checks if "currentUser" is saved in the browser.
+// If NOT, it forces the user to go to "/login".
+const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
+  const user = localStorage.getItem('currentUser');
+  return user ? <>{children}</> : <Navigate to="/login" replace />;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/bookings" element={<Bookings />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Routes>
+          
+          {/* --- PUBLIC ROUTE (Accessible by anyone) --- */}
+          <Route path="/login" element={<Login />} />
+
+          {/* --- PROTECTED ROUTES (Only accessible if logged in) --- */}
+          <Route 
+            path="/" 
+            element={
+              <PrivateRoute>
+                <Index />
+              </PrivateRoute>
+            } 
+          />
+          
+          <Route 
+            path="/bookings" 
+            element={
+              <PrivateRoute>
+                <Bookings />
+              </PrivateRoute>
+            } 
+          />
+
+          {/* --- CATCH ALL (404) --- */}
+          <Route path="*" element={<NotFound />} />
+          
+        </Routes>
+      </BrowserRouter>
+    </TooltipProvider>
   </QueryClientProvider>
 );
 
